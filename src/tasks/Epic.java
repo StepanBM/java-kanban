@@ -1,3 +1,6 @@
+package tasks;
+import status.TaskStatus;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {

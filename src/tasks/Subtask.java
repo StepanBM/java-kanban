@@ -1,24 +1,27 @@
+package tasks;
+import status.TaskStatus;
+
 public class Subtask extends Task {
 
-    private int subId;
+    private int epicID; // Тут ссылка (или id) на соответствующий Эпик, к которому принадлежит данная подзадача
 
     public Subtask(String name, String description, TaskStatus status) {
         super(name, description, status);
     }
 
-    public int getSubId() {
-        return subId;
+    public int getepicID() {
+        return epicID;
     }
 
-    public void setSubId(int subId) {
-        this.subId = subId;
+    public void setepicID(int epicID) {
+        this.epicID = epicID;
     }
 
     @Override
     public String toString() {
         String result = "Subtask{" +
                 "name='" + getName() + '\'' +
-                ", id=" + subId;
+                ", epicID=" + epicID;
         if (getDescription() != null) {
             result = result + ", description.length=" + getDescription().length();
         } else {

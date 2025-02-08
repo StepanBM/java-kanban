@@ -1,3 +1,8 @@
+import manager.TaskManager;
+import status.TaskStatus;
+import tasks.Epic;
+import tasks.Subtask;
+
 import java.util.Scanner;
 
 public class Main {
@@ -18,13 +23,13 @@ public class Main {
 
                     switch (command2) {
                         case "1":
-                            manager.outputAllEpic();
+                            System.out.println(manager.outputAllEpic());
                             break;
                         case "2":
                             manager.deleteAllEpic();
                             break;
                         case "3":
-                            manager.outputByIdEpic(1);
+                            System.out.println(manager.getByIdEpic(1));
                             break;
                         case "4":
                             Epic epic1 = new Epic("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
@@ -43,10 +48,10 @@ public class Main {
                             manager.updateEpic(2, epic);
                             break;
                         case "6":
-                            manager.deleteByIdEpic(4);
+                            manager.deleteByIdEpic(3);
                             break;
                         case "7":
-                          manager.getAllEpicSubtasks(2);
+                            System.out.println(manager.getAllEpicSubtasks(2));
                             break;
                         case "0":
                             System.out.println("Программа завершилась, до скорой встречи!");
@@ -65,13 +70,13 @@ public class Main {
                     command3 = scanner.nextLine();
                     switch (command3) {
                         case "1":
-                            manager.outputAllSubtask();
+                            System.out.println(manager.outputAllSubtask());
                             break;
                         case "2":
                             manager.deleteAllSubtask();
                             break;
                         case "3":
-                           manager.outputByIdSubtask(7);
+                            System.out.println(manager.getByIdSubtask(7));
                             break;
                         case "4":
                             Subtask subtask1 = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
