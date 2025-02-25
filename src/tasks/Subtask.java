@@ -1,6 +1,8 @@
 package tasks;
 import status.TaskStatus;
 
+import java.util.Objects;
+
 public class Subtask extends Task {
 
     private int epicID; // Тут ссылка (или id) на соответствующий Эпик, к которому принадлежит данная подзадача
@@ -29,6 +31,16 @@ public class Subtask extends Task {
         }
 
         return result + ", status=" + getStatus() + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subtask subtask = (Subtask) o;
+        return Objects.equals(getName(), subtask.getName()) &&
+                Objects.equals(getDescription(), subtask.getDescription()) &&
+                (getId() == subtask.getId());
     }
 
 }

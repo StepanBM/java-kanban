@@ -3,13 +3,18 @@ import status.TaskStatus;
 import tasks.Epic;
 import tasks.Subtask;
 
+import manager.Managers;
+import manager.HistoryManager;
+
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        TaskManager manager = new TaskManager();
+        HistoryManager historyManager = Managers.getDefaultHistory();
+        TaskManager manager = Managers.getDefault(historyManager);
+
         while (true) {
             printMenu();
             int command = scanner.nextInt();
@@ -19,7 +24,6 @@ public class Main {
                 while (!command2.equals("0")) {
                     printMenuEpic();
                     command2 = scanner.nextLine();
-
 
                     switch (command2) {
                         case "1":
@@ -105,6 +109,9 @@ public class Main {
                     }
 
                 }
+            } else if (command == 3) {
+                scanner.nextLine();
+              System.out.println(manager.getHistory());
             } else {
                 System.out.println("Тут ничего нет!!!");
                 return;
@@ -117,6 +124,7 @@ public class Main {
         System.out.println("Выберите команду:");
         System.out.println("1 - Эпики");
         System.out.println("2 - Подзадачи");
+        System.out.println("3 - История просмотров по id");
         System.out.println("0 - Выход");
     }
 

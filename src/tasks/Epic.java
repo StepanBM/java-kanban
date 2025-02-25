@@ -1,20 +1,24 @@
 package tasks;
 import status.TaskStatus;
 
+import java.util.Objects;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
-   private ArrayList<Subtask> listSubtask = new ArrayList<>();
+   private List<Subtask> listSubtask = new ArrayList<>();
 
     public Epic(String name, String description, TaskStatus status) {
         super(name, description, status);
     }
 
-    public ArrayList<Subtask> getListSubtask() {
+    public List<Subtask> getListSubtask() {
+
         return listSubtask;
     }
 
-    public void setListSubtask(ArrayList<Subtask> listSubtask) {
+    public void setListSubtask(List<Subtask> listSubtask) {
         this.listSubtask = listSubtask;
     }
 
@@ -30,6 +34,16 @@ public class Epic extends Task {
         }
 
         return result + ", status=" + getStatus() + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Epic epic = (Epic) o;
+        return Objects.equals(getName(), epic.getName()) &&
+                Objects.equals(getDescription(), epic.getDescription()) &&
+                (getId() == epic.getId());
     }
 
 }
