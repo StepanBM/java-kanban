@@ -10,7 +10,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     private final List<Task> historyList = new ArrayList<>();
 
    public List<Task> getHistory() {
-        return historyList;
+        return new ArrayList<>(historyList); // возвращаем копию списка
     }
 
     // Метод по контролю за количеством задач сохраненных в истории

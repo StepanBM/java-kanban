@@ -54,7 +54,7 @@ public interface TaskManager {
     // Получение списка всех подзадач определённого эпика
     List<Subtask> getAllEpicSubtasks(int id);
 
-    void changeStatus();
+    void changeStatus(int numberDelete, int id);
 
     List<Task> getHistory();
 
