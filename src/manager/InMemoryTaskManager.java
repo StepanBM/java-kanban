@@ -8,15 +8,16 @@ import tasks.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
 
     private final HistoryManager historyManager;
 
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private int counterEpic = 1;
+    private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Epic> epics = new HashMap<>();
+    private final Map<Integer, Subtask> subtasks = new HashMap<>();
+    private int counter = 1;
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
@@ -31,14 +32,14 @@ public class InMemoryTaskManager implements TaskManager {
     // Создание задач
     @Override
     public int createTask(Task task) {
-        task.setId(counterEpic++);
+        task.setId(counter++);
         tasks.put(task.getId(), task);
         return task.getId();
     }
 
     @Override
     public int createEpic(Epic epic) {
-        epic.setId(counterEpic++);
+        epic.setId(counter++);
         epics.put(epic.getId(), epic);
         return epic.getId();
     }
@@ -50,7 +51,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         int numberDelete = 0;
         Epic epic = epics.get(id);
-        subtask.setepicID(counterEpic++);
+        subtask.setepicID(counter++);
         subtasks.put(subtask.getepicID(), subtask);
         epic.getListSubtask().add(subtask);
         changeStatus(numberDelete, epic.getId());
@@ -198,7 +199,6 @@ public class InMemoryTaskManager implements TaskManager {
                 }
             }
         }
-
     }
 
     // Получение списка всех подзадач определённого эпика
