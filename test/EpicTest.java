@@ -1,5 +1,3 @@
-
-
 import manager.HistoryManager;
 import manager.Managers;
 import org.junit.jupiter.api.Test;

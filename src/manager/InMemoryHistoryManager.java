@@ -17,15 +17,15 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     // Метод по контролю за количеством задач сохраненных в истории
     @Override
-    public void add(Task task) {
+    public Task addTask(Task task) {
         if (historyMap.containsKey(task.getId())) {
             removeNode(historyMap.get(task.getId()));
         }
-        linkLast(task);
+       return linkLast(task);
     }
 
     @Override
-    public void remove(int id) {
+    public void removeTask(int id) {
         Node node = historyMap.remove(id);
         if (node != null) {
             removeNode(node);
@@ -40,7 +40,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     private int size = 0;
 
     //Добавление задачив конец списка
-    public void linkLast(Task task) {
+    public Task linkLast(Task task) {
 
         // Создаем новый узел
         Node<Task> newNode = new Node<>(tail, task, null);
@@ -56,6 +56,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         historyMap.put(task.getId(), newNode);
         // Увеличиваем размер списка
         size++;
+        return task;
     }
 
     // Собирание всех задач из списка в обычный ArrayList

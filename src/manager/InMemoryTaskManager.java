@@ -51,11 +51,11 @@ public class InMemoryTaskManager implements TaskManager {
         }
         int numberDelete = 0;
         Epic epic = epics.get(id);
-        subtask.setepicID(counter++);
-        subtasks.put(subtask.getepicID(), subtask);
+        subtask.setId(counter++);
+        subtasks.put(subtask.getId(), subtask);
         epic.getListSubtask().add(subtask);
         changeStatus(numberDelete, epic.getId());
-        return subtask.getepicID();
+        return subtask.getId();
     }
 
     // Вывод всех задач
@@ -105,7 +105,7 @@ public class InMemoryTaskManager implements TaskManager {
             return null;
         } else {
             Task task = tasks.get(id);
-            historyManager.add(task);
+            historyManager.addTask(task);
             return task;
         }
     }
@@ -116,7 +116,7 @@ public class InMemoryTaskManager implements TaskManager {
             return null;
         } else {
             Epic epic = epics.get(id);
-            historyManager.add(epic);
+            historyManager.addTask(epic);
             return epic;
         }
     }
@@ -127,7 +127,7 @@ public class InMemoryTaskManager implements TaskManager {
             return null;
         } else {
             Subtask subtask = subtasks.get(id);
-            historyManager.add(subtask);
+            historyManager.addTask(subtask);
             return subtask;
         }
     }
@@ -153,12 +153,12 @@ public class InMemoryTaskManager implements TaskManager {
         if (!(subtasks.containsKey(id))) {
             return subtask;
         }
-        subtask.setepicID(id);
-        subtasks.put(subtask.getepicID(), subtask);
+        subtask.setId(id);
+        subtasks.put(subtask.getId(), subtask);
         for (Integer key : epics.keySet()) {
             Epic epic = epics.get(key);
             for (int i = 0; i < epic.getListSubtask().size(); i++) {
-                if (subtask.getepicID() == epic.getListSubtask().get(i).getepicID()) {
+                if (subtask.getId() == epic.getListSubtask().get(i).getId()) {
                     epic.getListSubtask().set(i, subtask);
                     changeStatus(numberDelete, epic.getId());
                 }
@@ -171,15 +171,15 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteByIdTask(int id) {
         tasks.remove(id);
-        historyManager.remove(id);
+        historyManager.removeTask(id);
     }
 
     @Override
     public void deleteByIdEpic(int id) {
         Epic epic = epics.get(id);
-        historyManager.remove(id);
+        historyManager.removeTask(id);
         for (Subtask exp : epic.getListSubtask()) {
-            subtasks.remove(exp.getepicID());
+            subtasks.remove(exp.getId());
         }
         epics.remove(id);
     }
@@ -187,14 +187,14 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteByIdSubtask(int id) {
         Subtask subtask = subtasks.get(id);
-        historyManager.remove(id);
+        historyManager.removeTask(id);
         int numberDelete = 0;
-        if (subtask.getepicID() == id) {
+        if (subtask.getId() == id) {
             subtasks.remove(id);
             for (Integer key : epics.keySet()) {
                 Epic epic = epics.get(key);
                 for (int i = 0; i < epic.getListSubtask().size(); i++) {
-                    if (subtask.getepicID() == epic.getListSubtask().get(i).getepicID()) {
+                    if (subtask.getId() == epic.getListSubtask().get(i).getId()) {
                         epic.getListSubtask().remove(i);
                         numberDelete++;
                         changeStatus(numberDelete, epic.getId());
