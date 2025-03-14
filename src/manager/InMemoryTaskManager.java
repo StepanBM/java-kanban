@@ -26,7 +26,7 @@ public class InMemoryTaskManager implements TaskManager {
     // История просмотров задач, эпиков и подзадач по id
     @Override
     public List<Task> getHistory() {
-            return historyManager.getHistory();
+        return historyManager.getHistory();
     }
 
     // Создание задач
@@ -77,18 +77,31 @@ public class InMemoryTaskManager implements TaskManager {
     // Удаление всех задач
     @Override
     public void deleteAllTask() {
+        for (Task task : tasks.values()) {
+            historyManager.removeTask(task.getId());
+        }
         tasks.clear();
     }
 
     @Override
     public void deleteAllEpic() {
+        for (Epic epic : epics.values()) {
+            historyManager.removeTask(epic.getId());
+            for (Subtask exp : epic.getListSubtask()) {
+                historyManager.removeTask(exp.getId());
+            }
+        }
         epics.clear();
         subtasks.clear();
+
     }
 
     @Override
     public void deleteAllSubtask() {
         int numberDelete = 0;
+        for (Subtask subtask : subtasks.values()) {
+            historyManager.removeTask(subtask.getId());
+        }
         subtasks.clear();
         for (Integer key : epics.keySet()) {
             Epic epic = epics.get(key);
@@ -180,6 +193,7 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.removeTask(id);
         for (Subtask exp : epic.getListSubtask()) {
             subtasks.remove(exp.getId());
+            historyManager.removeTask(exp.getId());
         }
         epics.remove(id);
     }
@@ -219,25 +233,25 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void changeStatus(int numberDelete, int id) {
-            Epic epic = epics.get(id);
-            int statusNew = 0;
-            int statusProgress = 0;
-            int statusDone = numberDelete;
-            for (int i = 0; i < epic.getListSubtask().size(); i++) {
+        Epic epic = epics.get(id);
+        int statusNew = 0;
+        int statusProgress = 0;
+        int statusDone = numberDelete;
+        for (int i = 0; i < epic.getListSubtask().size(); i++) {
 
-                if (epic.getListSubtask().get(i).getStatus().equals(TaskStatus.NEW)) {
-                    statusNew++;
-                } else {
-                    statusProgress++;
-                }
-            }
-            if (statusDone > 0 && statusNew == 0 && statusProgress == 0) {
-                epic.setStatus(TaskStatus.DONE);
-            } else if (statusDone == 0 && statusProgress == 0) {
-                epic.setStatus(TaskStatus.NEW);
+            if (epic.getListSubtask().get(i).getStatus().equals(TaskStatus.NEW)) {
+                statusNew++;
             } else {
-                epic.setStatus(TaskStatus.IN_PROGRESS);
+                statusProgress++;
             }
+        }
+        if (statusDone > 0 && statusNew == 0 && statusProgress == 0) {
+            epic.setStatus(TaskStatus.DONE);
+        } else if (statusDone == 0 && statusProgress == 0) {
+            epic.setStatus(TaskStatus.NEW);
+        } else {
+            epic.setStatus(TaskStatus.IN_PROGRESS);
+        }
     }
 
 

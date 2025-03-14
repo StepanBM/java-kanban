@@ -7,8 +7,6 @@ import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    // private final List<Task> historyList = new ArrayList<>();
-
     private final HashMap<Integer, Node> historyMap = new HashMap<>();
 
     public List<Task> getHistory() {
@@ -36,8 +34,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node head;
     // Последний элемент списка
     private Node tail;
-    // Длина списка
-    private int size = 0;
 
     //Добавление задачив конец списка
     public Task linkLast(Task task) {
@@ -54,8 +50,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         // Обновляем хвост
         tail = newNode;
         historyMap.put(task.getId(), newNode);
-        // Увеличиваем размер списка
-        size++;
+
         return task;
     }
 
