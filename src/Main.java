@@ -33,7 +33,7 @@ public class Main {
                             manager.deleteAllEpic();
                             break;
                         case "3":
-                            System.out.println(manager.getByIdEpic(1));
+                            System.out.println(manager.getByIdEpic(3));
                             break;
                         case "4":
                             Epic epic1 = new Epic("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
