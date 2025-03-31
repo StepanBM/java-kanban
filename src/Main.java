@@ -1,5 +1,5 @@
 import manager.TaskManager;
-import status.TaskStatus;
+import taskData.TaskStatus;
 import tasks.Epic;
 import tasks.Subtask;
 
@@ -8,12 +8,31 @@ import manager.HistoryManager;
 
 import java.util.Scanner;
 
+import manager.FileBackedTaskManager;
+import tasks.Task;
+
+import java.io.File;
+import java.nio.file.Path;
+
 public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        HistoryManager historyManager = Managers.getDefaultHistory();
-        TaskManager manager = Managers.getDefault(historyManager);
+//        HistoryManager historyManager = Managers.getDefaultHistory();
+//        TaskManager manager = Managers.getDefault(historyManager);
+
+        Path path = Path.of("result.csv");
+        File file = new File(path.toString());
+       FileBackedTaskManager manager = new FileBackedTaskManager(Managers.getDefaultHistory(), file);
+
+       String stringTask = "1,TASK,Task1,NEW,Description,task1, ";
+
+       // Создаем задачу из строки
+        Task task = manager.fromString(stringTask);
+
+        // Преобразование задачи обратно в строку
+        String stringTaskReverse = task.toString();
+        System.out.println(stringTaskReverse);
 
         while (true) {
             printMenu();
@@ -115,6 +134,10 @@ public class Main {
             } else {
                 System.out.println("Тут ничего нет!!!");
                 return;
+            }
+
+            for (Task tasks : manager.loadFromFile(file).outputAllTask()) {
+                System.out.println(tasks);
             }
     }
 
