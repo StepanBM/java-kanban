@@ -53,7 +53,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             String line;
 
             while ((line = reader.readLine()) != null) {
-                Task task=fromString(line);
+                Task task = fromString(line);
                 manager.createTask(task);
             }
         } catch (IOException e) {
