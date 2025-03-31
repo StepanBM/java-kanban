@@ -1,6 +1,6 @@
 package manager;
 
-import taskType.TaskStatus;
+import data.TaskStatus.TaskStatus;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;

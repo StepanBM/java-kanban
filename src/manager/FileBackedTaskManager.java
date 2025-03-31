@@ -10,8 +10,8 @@ import java.nio.charset.StandardCharsets;
 import java.io.*;
 import java.io.IOException;
 
-import taskType.TaskStatus;
-import taskType.TypesTasks;
+import data.TaskStatus.TaskStatus;
+import data.TypesTasks.TypesTasks;
 
 
 public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager {

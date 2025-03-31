@@ -1,4 +1,4 @@
-import taskType.TaskStatus;
+import data.TaskStatus.TaskStatus;
 import tasks.Epic;
 import tasks.Subtask;
 
