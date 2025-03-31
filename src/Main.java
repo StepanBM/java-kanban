@@ -1,10 +1,8 @@
-import manager.TaskManager;
-import taskData.TaskStatus;
+import taskType.TaskStatus;
 import tasks.Epic;
 import tasks.Subtask;
 
 import manager.Managers;
-import manager.HistoryManager;
 
 import java.util.Scanner;
 

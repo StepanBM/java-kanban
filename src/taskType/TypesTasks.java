@@ -1,4 +1,4 @@
-package taskData;
+package taskType;
 
 public enum TypesTasks {
     EPIC,
