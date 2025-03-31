@@ -53,7 +53,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             String line;
 
             while ((line = reader.readLine()) != null) {
-                Task task =fromString(line);
+                Task task = fromString(line);
                 manager.createTask(task);
             }
         } catch (IOException e) {
@@ -88,19 +88,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         int id = Integer.parseInt(params[0]);
         String typeTasks = params[1];
         String name = params[2];
-        String description =  params[4];
+        String description = params[4];
         TaskStatus status = TaskStatus.valueOf(params[3]);
 
         Task task;
 
-       if (typeTasks.equals("TASK")) {
-           task = new Task(name, description, status);
-       } else if (typeTasks.equals("EPIC")) {
-           task = new Epic(name, description, status);
-       } else {
-           task = new Subtask(name, description, status);
-       }
-       task.setId(id);
+        if (typeTasks.equals("TASK")) {
+            task = new Task(name, description, status);
+        } else if (typeTasks.equals("EPIC")) {
+            task = new Epic(name, description, status);
+        } else {
+            task = new Subtask(name, description, status);
+        }
+        task.setId(id);
         return task;
     }
 
