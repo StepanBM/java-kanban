@@ -45,13 +45,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public int createSubtask(int id, Subtask subtask) {
-        if (!epics.containsKey(id)) {
+    public int createSubtask(Subtask subtask) {
+        if (!epics.containsKey(subtask.getepicID())) {
             return 0;
         }
         int numberDelete = 0;
-        Epic epic = epics.get(id);
+        Epic epic = epics.get(subtask.getepicID());
         subtask.setId(counter++);
+        subtask.setepicID(subtask.getepicID());
         subtasks.put(subtask.getId(), subtask);
         epic.getListSubtask().add(subtask);
         changeStatus(numberDelete, epic.getId());

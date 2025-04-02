@@ -49,12 +49,12 @@ class EpicTest {
         Epic epic1 = new Epic("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
         final int epicId = taskManager.createEpic(epic1);
 
-        Subtask subtask = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
-        Subtask subtask2 = new Subtask("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW);
-        Subtask subtask3 = new Subtask("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW);
-        taskManager.createSubtask(epicId, subtask);
-        taskManager.createSubtask(epicId, subtask2);
-        taskManager.createSubtask(epicId, subtask3);
+        Subtask subtask = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, 1);
+        Subtask subtask2 = new Subtask("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, 1);
+        Subtask subtask3 = new Subtask("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, 1);
+        taskManager.createSubtask(subtask);
+        taskManager.createSubtask(subtask2);
+        taskManager.createSubtask(subtask3);
         taskManager.deleteAllSubtask();
         assertEquals(TaskStatus.DONE, epic1.getStatus());
 
@@ -66,12 +66,12 @@ class EpicTest {
         Epic epic1 = new Epic("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
         final int epicId = taskManager.createEpic(epic1);
 
-        Subtask subtask = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
-        Subtask subtask2 = new Subtask("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW);
-        Subtask subtask3 = new Subtask("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW);
-        taskManager.createSubtask(epicId, subtask);
-        taskManager.createSubtask(epicId, subtask2);
-        taskManager.createSubtask(epicId, subtask3);
+        Subtask subtask = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, 1);
+        Subtask subtask2 = new Subtask("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, 1);
+        Subtask subtask3 = new Subtask("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, 1);
+        taskManager.createSubtask(subtask);
+        taskManager.createSubtask(subtask2);
+        taskManager.createSubtask(subtask3);
 
         assertEquals(TaskStatus.NEW, epic1.getStatus());
 
@@ -83,12 +83,12 @@ class EpicTest {
         Epic epic1 = new Epic("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
         final int epicId = taskManager.createEpic(epic1);
 
-        Subtask subtask = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
-        Subtask subtask2 = new Subtask("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW);
-        Subtask subtask3 = new Subtask("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW);
-        final int subtaskId = taskManager.createSubtask(epicId, subtask);
-        final int subtaskId2 = taskManager.createSubtask(epicId, subtask2);
-        final int subtaskId3 = taskManager.createSubtask(epicId, subtask3);
+        Subtask subtask = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, 1);
+        Subtask subtask2 = new Subtask("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, 1);
+        Subtask subtask3 = new Subtask("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, 1);
+        final int subtaskId = taskManager.createSubtask(subtask);
+        final int subtaskId2 = taskManager.createSubtask(subtask2);
+        final int subtaskId3 = taskManager.createSubtask(subtask3);
 
         taskManager.deleteByIdSubtask(subtaskId2);
         taskManager.deleteByIdSubtask(subtaskId3);

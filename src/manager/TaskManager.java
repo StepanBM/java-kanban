@@ -14,7 +14,7 @@ public interface TaskManager {
 
     int createEpic(Epic epic);
 
-    int createSubtask(int id, Subtask subtask);
+    int createSubtask(Subtask subtask);
 
     // Вывод всех задач
     ArrayList<Task> outputAllTask();
