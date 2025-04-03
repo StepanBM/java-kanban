@@ -1,5 +1,6 @@
 package tasks;
 import data.TaskStatus.TaskStatus;
+import data.TypesTasks.TypesTasks;
 
 import java.util.Objects;
 
@@ -18,6 +19,11 @@ public class Subtask extends Task {
 
     public void setepicID(int epicID) {
         this.epicID = epicID;
+    }
+
+    @Override
+    public TypesTasks getType() {
+        return TypesTasks.SUBTASK;
     }
 
     @Override

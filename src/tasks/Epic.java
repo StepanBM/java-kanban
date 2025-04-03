@@ -1,5 +1,6 @@
 package tasks;
 import data.TaskStatus.TaskStatus;
+import data.TypesTasks.TypesTasks;
 
 import java.util.Objects;
 
@@ -20,6 +21,11 @@ public class Epic extends Task {
 
     public void setListSubtask(List<Subtask> listSubtask) {
         this.listSubtask = listSubtask;
+    }
+
+    @Override
+    public TypesTasks getType() {
+        return TypesTasks.EPIC;
     }
 
     @Override

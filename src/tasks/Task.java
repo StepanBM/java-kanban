@@ -1,5 +1,6 @@
 package tasks;
 import data.TaskStatus.TaskStatus;
+import data.TypesTasks.TypesTasks;
 
 import java.util.Objects;
 
@@ -47,6 +48,10 @@ public class Task {
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    public TypesTasks getType() {
+        return TypesTasks.TASK;
     }
 
     @Override

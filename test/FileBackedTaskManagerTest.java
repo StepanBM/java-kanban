@@ -2,12 +2,15 @@ import manager.*;
 import org.junit.jupiter.api.Test;
 import data.TaskStatus.TaskStatus;
 
+import tasks.Epic;
+import tasks.Subtask;
 import tasks.Task;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FileBackedTaskManagerTest {
 
@@ -26,21 +29,29 @@ class FileBackedTaskManagerTest {
     @Test
     void savingMultipleTasks() throws IOException {
         File file = File.createTempFile("resultTaskTest", ".csv");
+
         FileBackedTaskManager taskManager = new FileBackedTaskManager(new InMemoryHistoryManager(), file);
 
         Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
         Task task2 = new Task("Имя №2", "Ооооочень длинное описание № 2", TaskStatus.NEW);
-
         taskManager.createTask(task1);
         taskManager.createTask(task2);
 
-        taskManager.save();
+        Epic epic = new Epic("epic", "desription", TaskStatus.NEW);
+        taskManager.createEpic(epic);
+
+        Subtask subtask=new Subtask("sub1","descrr1", TaskStatus.NEW, epic.getId());
+        taskManager.createSubtask(subtask);
+
+        taskManager.deleteAllTask();
 
         FileBackedTaskManager loadedTaskManager = FileBackedTaskManager.loadFromFile(file);
 
-        assertEquals(2, loadedTaskManager.outputAllTask().size());
-        assertEquals("Имя №1", loadedTaskManager.outputAllTask().get(0).getName());
-        assertEquals("Имя №2", loadedTaskManager.outputAllTask().get(1).getName());
+        assertEquals(1, loadedTaskManager.outputAllEpic().size());
+        assertEquals(1, loadedTaskManager.outputAllSubtask().size());
+
+        assertEquals("epic", loadedTaskManager.outputAllEpic().get(0).getName());
+        assertEquals("sub1", loadedTaskManager.outputAllSubtask().get(0).getName());
     }
 
     @Test
