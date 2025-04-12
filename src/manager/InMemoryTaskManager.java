@@ -1,23 +1,20 @@
 package manager;
 
-import status.TaskStatus;
+import data.TaskStatus.TaskStatus;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
     private final HistoryManager historyManager;
 
-    private final Map<Integer, Task> tasks = new HashMap<>();
-    private final Map<Integer, Epic> epics = new HashMap<>();
-    private final Map<Integer, Subtask> subtasks = new HashMap<>();
-    private int counter = 1;
+    public Map<Integer, Task> tasks = new HashMap<>();
+    public Map<Integer, Epic> epics = new HashMap<>();
+    public Map<Integer, Subtask> subtasks = new HashMap<>();
+    public int counter = 1;
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
@@ -45,13 +42,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public int createSubtask(int id, Subtask subtask) {
-        if (!epics.containsKey(id)) {
+    public int createSubtask(Subtask subtask) {
+        if (!epics.containsKey(subtask.getepicID())) {
             return 0;
         }
         int numberDelete = 0;
-        Epic epic = epics.get(id);
+        Epic epic = epics.get(subtask.getepicID());
         subtask.setId(counter++);
+        subtask.setepicID(subtask.getepicID());
         subtasks.put(subtask.getId(), subtask);
         epic.getListSubtask().add(subtask);
         changeStatus(numberDelete, epic.getId());

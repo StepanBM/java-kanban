@@ -2,7 +2,7 @@ import manager.HistoryManager;
 import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.Test;
-import status.TaskStatus;
+import data.TaskStatus.TaskStatus;
 import tasks.Task;
 
 import java.util.List;

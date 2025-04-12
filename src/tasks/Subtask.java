@@ -1,5 +1,6 @@
 package tasks;
-import status.TaskStatus;
+import data.TaskStatus.TaskStatus;
+import data.TypesTasks.TypesTasks;
 
 import java.util.Objects;
 
@@ -7,8 +8,9 @@ public class Subtask extends Task {
 
     private int epicID; // Тут ссылка (или id) на соответствующий Эпик, к которому принадлежит данная подзадача
 
-    public Subtask(String name, String description, TaskStatus status) {
+    public Subtask(String name, String description, TaskStatus status, int epicID) {
         super(name, description, status);
+        this.epicID = epicID;
     }
 
     public int getepicID() {
@@ -20,10 +22,16 @@ public class Subtask extends Task {
     }
 
     @Override
+    public TypesTasks getType() {
+        return TypesTasks.SUBTASK;
+    }
+
+    @Override
     public String toString() {
         String result = "Subtask{" +
                 "name='" + getName() + '\'' +
-                ", id=" + getId();
+                ", id=" + getId() + '\'' +
+                ", epicID=" + getepicID();
         if (getDescription() != null) {
             result = result + ", description.length=" + getDescription().length();
         } else {
