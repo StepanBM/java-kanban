@@ -8,6 +8,8 @@ import tasks.Task;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,15 +34,15 @@ class FileBackedTaskManagerTest {
 
         FileBackedTaskManager taskManager = new FileBackedTaskManager(new InMemoryHistoryManager(), file);
 
-        Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
-        Task task2 = new Task("Имя №2", "Ооооочень длинное описание № 2", TaskStatus.NEW);
+        Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 3, 1, 0, 9));
+        Task task2 = new Task("Имя №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 11, 1, 0, 9));
         taskManager.createTask(task1);
         taskManager.createTask(task2);
 
         Epic epic = new Epic("epic", "desription", TaskStatus.NEW);
         taskManager.createEpic(epic);
 
-        Subtask subtask=new Subtask("sub1","descrr1", TaskStatus.NEW, epic.getId());
+        Subtask subtask=new Subtask("sub1","descrr1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 9), epic.getId());
         taskManager.createSubtask(subtask);
 
         taskManager.deleteAllTask();
@@ -59,9 +61,9 @@ class FileBackedTaskManagerTest {
         File file = File.createTempFile("resultTaskTest", ".csv");
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
-            bw.write("id,type,name,status,description,epic\n");
-            bw.write("1,TASK,Имя Task №1,NEW,Ооооочень длинное описание Task № 1,epic\n");
-            bw.write("2,EPIC,Имя Epic №1,NEW,Ооооочень длинное описание Epic № 1,epic\n");
+            bw.write("id,type,name,status,description,duration,startTime,epic\n");
+            bw.write("1,TASK,Имя Task №1,NEW,Ооооочень длинное описание Task № 1,10,01.07.2025 00:54,epic\n");
+            bw.write("2,EPIC,Имя Epic №1,NEW,Ооооочень длинное описание Epic № 1,null,null,epic\n");
             bw.write("historyTask:\n");
         }
 

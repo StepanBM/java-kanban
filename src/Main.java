@@ -3,6 +3,9 @@ import manager.HistoryManager;
 import tasks.Epic;
 import tasks.Subtask;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import manager.Managers;
 
 import java.util.Scanner;
@@ -27,14 +30,22 @@ public class Main {
         FileBackedTaskManager taskManager = new FileBackedTaskManager(historyManager, file);
         FileBackedTaskManager manager = taskManager.loadFromFile(file);
 
-       String stringTask = "1,TASK,Task1,NEW,Description,task1, ";
+        Task task1 = new Task("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 10));
+        Task task2 = new Task("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 55));
+        Task task3 = new Task("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 33));
+        manager.createTask(task1);
+        manager.createTask(task2);
+        manager.createTask(task3);
 
-       // Создаем задачу из строки
-        Task task = manager.fromString(stringTask);
 
-        // Преобразование задачи обратно в строку
-        String stringTaskReverse = task.toString();
-        System.out.println(stringTaskReverse);
+//       String stringTask = "1,TASK,Имя подзадачи №1,NEW,Ооооочень длинное описание № 1,10,01.07.2025 00:10";
+//
+//       // Создаем задачу из строки
+//        Task task = manager.fromString(stringTask);
+//
+//        // Преобразование задачи обратно в строку
+//        String stringTaskReverse = task.toString();
+//        System.out.println(stringTaskReverse);
 
 //        for (Task tasks : manager.loadFromFile(file).outputAllTask()) {
 //            System.out.println(tasks);
@@ -108,11 +119,11 @@ public class Main {
                             System.out.println(manager.getByIdSubtask(7));
                             break;
                         case "4":
-                            Subtask subtask1 = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, 1);
-                            Subtask subtask2 = new Subtask("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, 1);
-                            Subtask subtask3 = new Subtask("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, 3);
-                            Subtask subtask4 = new Subtask("Имя подзадачи №4", "Ооооочень длинное описание № 4", TaskStatus.NEW, 4);
-                            Subtask subtask5 = new Subtask("Имя подзадачи №5", "Ооооочень длинное описание № 5", TaskStatus.NEW, 3);
+                            Subtask subtask1 = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 10), 1);
+                            Subtask subtask2 = new Subtask("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 21), 1);
+                            Subtask subtask3 = new Subtask("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 32), 3);
+                            Subtask subtask4 = new Subtask("Имя подзадачи №4", "Ооооочень длинное описание № 4", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 3, 1, 0, 43), 4);
+                            Subtask subtask5 = new Subtask("Имя подзадачи №5", "Ооооочень длинное описание № 5", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 54), 1);
                             manager.createSubtask(subtask1);
                             manager.createSubtask(subtask2);
                             manager.createSubtask(subtask3);
@@ -120,7 +131,7 @@ public class Main {
                             manager.createSubtask(subtask5);
                             break;
                         case "5":
-                            Subtask subtask = new Subtask("Имя обновленное", "Ооооочень длинное описание", TaskStatus.NEW, 1);
+                            Subtask subtask = new Subtask("Имя обновленное", "Ооооочень длинное описание", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 9, 3, 1, 15), 1);
                             manager.updateSubtask(7, subtask);
                             break;
                         case "6":
@@ -136,7 +147,8 @@ public class Main {
                 }
             } else if (command == 3) {
                 scanner.nextLine();
-              System.out.println(manager.getHistory());
+             // System.out.println(manager.getHistory());
+                System.out.println(manager.getPrioritizedTasks());
             } else {
                 System.out.println("Тут ничего нет!!!");
                 return;

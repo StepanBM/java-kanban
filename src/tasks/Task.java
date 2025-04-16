@@ -2,6 +2,10 @@ package tasks;
 import data.TaskStatus.TaskStatus;
 import data.TypesTasks.TypesTasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.Objects;
 
 public class Task {
@@ -9,12 +13,33 @@ public class Task {
     private String name;
     private String description;
     private TaskStatus status;
+    private Duration duration;
+    private LocalDateTime startTime;
 
+   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+
+    public Task(String name, String description, TaskStatus status, Duration duration, LocalDateTime startTime) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.duration = duration;
+        this.startTime = startTime;
+
+    }
 
     public Task(String name, String description, TaskStatus status) {
         this.name = name;
         this.description = description;
         this.status = status;
+
+    }
+
+    public Task(String name, String description, TaskStatus status, Duration duration) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.duration = duration;
 
     }
 
@@ -54,6 +79,31 @@ public class Task {
         return TypesTasks.TASK;
     }
 
+    public String getLocalDateTimeString() {
+        String formatDateTime = startTime.format(formatter);
+        return formatDateTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plus(duration);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -63,7 +113,8 @@ public class Task {
         return Objects.equals(name, task.name) &&
                 Objects.equals(description, task.description) &&
                 (id == task.id) &&
-                 status == task.status;
+                 status == task.status &&
+                duration == task.duration;
     }
 
     @Override
@@ -82,7 +133,7 @@ public class Task {
             result = result + ", description=null";
         }
 
-        return result + ", status=" + status + '}';
+        return result + ", status=" + status +  '}';
     }
 
 }

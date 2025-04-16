@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import data.TaskStatus.TaskStatus;
 import tasks.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +19,7 @@ class TaskTest {
     @Test
     void addNewTask() {
 
-        Task task = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
+        Task task = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 1, 1, 0, 9));
         final int taskId = taskManager.createTask(task);
 
         final Task savedTask = taskManager.getByIdTask(taskId);
@@ -35,8 +37,8 @@ class TaskTest {
     @Test
     void checkingForTaskConflictWithGivenIdAndGeneratedId() {
 
-        Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
-        Task task2 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
+        Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10));
+        Task task2 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10));
         final int taskId = taskManager.createTask(task1);
 
         Task savedTask = taskManager.updateTask(taskId, task2);
