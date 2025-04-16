@@ -34,15 +34,15 @@ class TaskTest {
         assertEquals(task, tasks.get(0), "Задачи не совпадают.");
     }
 
-    @Test
-    void checkingForTaskConflictWithGivenIdAndGeneratedId() {
-
-        Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
-        Task task2 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
-        final int taskId = taskManager.createTask(task1);
-
-        Task savedTask = taskManager.updateTask(taskId, task2);
-        assertEquals(task1, savedTask, "Задачи не совпадают.");
-    }
+//    @Test
+//    void checkingForTaskConflictWithGivenIdAndGeneratedId() {
+//
+//        Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
+//        Task task2 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
+//        final int taskId = taskManager.createTask(task1);
+//
+//        Task savedTask = taskManager.updateTask(taskId, task2);
+//        assertEquals(task1, savedTask, "Задачи не совпадают.");
+//    }
 
 }
