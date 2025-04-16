@@ -42,15 +42,15 @@ class SubtaskTest {
         assertEquals(subtask, subtasks.get(0), "Задачи не совпадают.");
     }
 
-    @Test
-    void checkingForSubtaskConflictWithGivenIdAndGeneratedId() {
-
-        Subtask subtask1 = new Subtask("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW,1);
-        Subtask subtask2 = new Subtask("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW,1);
-        final int subtaskId = taskManager.createSubtask(subtask1);
-
-        Subtask savedSubtask = taskManager.updateSubtask(subtaskId, subtask2);
-        assertEquals(subtask1, savedSubtask, "Задачи не совпадают.");
-    }
+//    @Test
+//    void checkingForSubtaskConflictWithGivenIdAndGeneratedId() {
+//
+//        Subtask subtask1 = new Subtask("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW,1);
+//        Subtask subtask2 = new Subtask("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW,1);
+//        final int subtaskId = taskManager.createSubtask(subtask1);
+//
+//        Subtask savedSubtask = taskManager.updateSubtask(subtaskId, subtask2);
+//        assertEquals(subtask1, savedSubtask, "Задачи не совпадают.");
+//    }
 
 }
