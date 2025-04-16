@@ -46,7 +46,7 @@ class SubtaskTest {
     void checkingForSubtaskConflictWithGivenIdAndGeneratedId() {
 
         Subtask subtask1 = new Subtask("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 9), 1);
-        Subtask subtask2 = new Subtask("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 9), 1);
+        Subtask subtask2 = new Subtask("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 5, 1, 0, 9), 1);
         final int subtaskId = taskManager.createSubtask(subtask1);
 
         Subtask savedSubtask = taskManager.updateSubtask(subtaskId, subtask2);

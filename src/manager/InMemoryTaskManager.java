@@ -310,6 +310,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private boolean doTheTasksOverlapInTime(Task task1, Task task2) {
+        if (task1.getStartTime() == null) {
+            return false;
+        }
         LocalDateTime task1StartTime = task1.getStartTime();
         LocalDateTime task1EndTime = task1.getEndTime();
         LocalDateTime task2StartTime = task2.getStartTime();

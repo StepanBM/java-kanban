@@ -37,8 +37,8 @@ class TaskTest {
     @Test
     void checkingForTaskConflictWithGivenIdAndGeneratedId() {
 
-        Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10));
-        Task task2 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10));
+        Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
+        Task task2 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
         final int taskId = taskManager.createTask(task1);
 
         Task savedTask = taskManager.updateTask(taskId, task2);
