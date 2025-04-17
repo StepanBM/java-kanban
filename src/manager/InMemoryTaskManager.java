@@ -164,6 +164,15 @@ public class InMemoryTaskManager implements TaskManager {
     // Обновление задач
     @Override
     public Task updateTask(int id, Task task) {
+        if (theTaskIntersectsInTheList(task)) {
+            throw new ManagerErrorSaveTaskTime("Не получилось сохранить задачу, измените время начала");
+        }
+        for (Task oldTask : prioritizedTasks) {
+            if (oldTask.getId() == id) {
+                prioritizedTasks.remove(oldTask);
+                break;
+            }
+        }
         task.setId(id);
         tasks.put(task.getId(), task);
         return task;
@@ -182,14 +191,19 @@ public class InMemoryTaskManager implements TaskManager {
         if (!(subtasks.containsKey(id))) {
             return subtask;
         }
+        if (theTaskIntersectsInTheList(subtask)) {
+            throw new ManagerErrorSaveTaskTime("Не получилось сохранить задачу, измените время начала");
+        }
         subtask.setId(id);
         subtasks.put(subtask.getId(), subtask);
         for (Integer key : epics.keySet()) {
             Epic epic = epics.get(key);
             for (int i = 0; i < epic.getListSubtask().size(); i++) {
                 if (subtask.getId() == epic.getListSubtask().get(i).getId()) {
+                    prioritizedTasks.remove(epic.getListSubtask().get(i));
                     epic.getListSubtask().set(i, subtask);
                     changeStatus(numberDelete, epic.getId());
+                    prioritizedTasks.add(subtask);
                     updateEpicTime(epic.getId());
                 }
             }

@@ -30,12 +30,12 @@ public class Main {
         FileBackedTaskManager taskManager = new FileBackedTaskManager(historyManager, file);
         FileBackedTaskManager manager = taskManager.loadFromFile(file);
 
-        Task task1 = new Task("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 10));
-        Task task2 = new Task("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 55));
-        Task task3 = new Task("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 33));
-        manager.createTask(task1);
-        manager.createTask(task2);
-        manager.createTask(task3);
+//        Task task1 = new Task("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 10));
+//        Task task2 = new Task("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 55));
+//        Task task3 = new Task("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 33));
+//        manager.createTask(task1);
+//        manager.createTask(task2);
+//        manager.createTask(task3);
 
 
 //       String stringTask = "1,TASK,Имя подзадачи №1,NEW,Ооооочень длинное описание № 1,10,01.07.2025 00:10";
@@ -131,7 +131,7 @@ public class Main {
                             manager.createSubtask(subtask5);
                             break;
                         case "5":
-                            Subtask subtask = new Subtask("Имя обновленное", "Ооооочень длинное описание", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 9, 3, 1, 15), 1);
+                            Subtask subtask = new Subtask("Имя обновленное", "Ооооочень длинное описание", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(1999, 7, 1, 0, 30), 1);
                             manager.updateSubtask(7, subtask);
                             break;
                         case "6":

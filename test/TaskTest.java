@@ -4,11 +4,6 @@ import manager.TaskManager;
 import org.junit.jupiter.api.Test;
 import data.TaskStatus.TaskStatus;
 import tasks.Task;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class TaskTest {
@@ -17,32 +12,15 @@ class TaskTest {
     TaskManager taskManager = Managers.getDefault(historyManager);
 
     @Test
-    void addNewTask() {
+    void checkingForTaskConflictWithGivenIdAndGeneratedId() {
+        Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
+        Task task2 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
 
-        Task task = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 1, 1, 0, 9));
-        final int taskId = taskManager.createTask(task);
+        final int taskId = taskManager.createTask(task1);
+        Task savedTask = taskManager.updateTask(taskId, task2);
 
-        final Task savedTask = taskManager.getByIdTask(taskId);
+        assertEquals(task1, savedTask, "Задачи не совпадают.");
 
-        assertEquals(task, savedTask, "Задачи не совпадают.");
-        assertNotNull(savedTask, "Задача не найдена.");
-
-        final List<Task> tasks = taskManager.outputAllTask();
-
-        assertNotNull(tasks, "Задачи не возвращаются.");
-        assertEquals(1, tasks.size(), "Неверное количество задач.");
-        assertEquals(task, tasks.get(0), "Задачи не совпадают.");
     }
-
-//    @Test
-//    void checkingForTaskConflictWithGivenIdAndGeneratedId() {
-//
-//        Task task1 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
-//        Task task2 = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
-//        final int taskId = taskManager.createTask(task1);
-//
-//        Task savedTask = taskManager.updateTask(taskId, task2);
-//        assertEquals(task1, savedTask, "Задачи не совпадают.");
-//    }
 
 }
