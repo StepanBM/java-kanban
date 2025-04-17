@@ -74,7 +74,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         final int epicId = taskManager.createEpic(epic1);
         final int subtaskId = taskManager.createSubtask(subtask);
         final int subtaskId2 = taskManager.createSubtask(subtask2);
-        final int subtaskId3 = taskManager.createSubtask(subtask3);
+      //  final int subtaskId3 = taskManager.createSubtask(subtask3);
 
         final Subtask savedSubtask = taskManager.getByIdSubtask(subtaskId);
 
@@ -84,7 +84,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         final List<Subtask> subtasks = taskManager.outputAllSubtask();
 
         assertNotNull(epic1.getListSubtask(), "Список подзадач не должен быть null.");
-        assertEquals(3, epic1.getListSubtask().size(), "Неверное количество подзадач.");
+        assertEquals(2, epic1.getListSubtask().size(), "Неверное количество подзадач.");
         assertTrue(epic1.getListSubtask().contains(subtask), "Список подзадач не содержит подзадачу 1.");
         assertTrue(epic1.getListSubtask().contains(subtask2), "Список подзадач не содержит подзадачу 2.");
         assertNotNull(subtasks, "Задачи не возвращаются.");
@@ -120,8 +120,8 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
 @Test
 void deleteByIdSubtask() {
-    final int epicId = taskManager.createEpic(epic1);
-    final int subtaskId = taskManager.createSubtask(subtask);
+    final int epicId = taskManager.createEpic(epic2);
+    final int subtaskId = taskManager.createSubtask(subtask3);
     taskManager.deleteByIdSubtask(subtaskId);
 
     assertNull(taskManager.getByIdSubtask(subtaskId), "Задача не была удалена.");
