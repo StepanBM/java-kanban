@@ -107,8 +107,8 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     void deleteByIdEpic() {
-        int epicId = epic1.getId();
-        taskManager.deleteByIdTask(epicId);
+        final int epicId = taskManager.createEpic(epic1);
+        taskManager.deleteByIdEpic(epicId);
 
         assertNull(taskManager.getByIdEpic(epicId), "Задача не была удалена.");
 
@@ -120,10 +120,11 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
 @Test
 void deleteByIdSubtask() {
-    int substakId = subtask.getId();
-    taskManager.deleteByIdTask(substakId);
+    final int epicId = taskManager.createEpic(epic1);
+    final int subtaskId = taskManager.createSubtask(subtask);
+    taskManager.deleteByIdSubtask(subtaskId);
 
-    assertNull(taskManager.getByIdSubtask(substakId), "Задача не была удалена.");
+    assertNull(taskManager.getByIdSubtask(subtaskId), "Задача не была удалена.");
 
     List<Subtask> subtasks = taskManager.outputAllSubtask();
 
