@@ -2,14 +2,26 @@ package tasks;
 import data.TaskStatus.TaskStatus;
 import data.TypesTasks.TypesTasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Subtask extends Task {
 
     private int epicID; // Тут ссылка (или id) на соответствующий Эпик, к которому принадлежит данная подзадача
 
+    public Subtask(String name, String description, TaskStatus status, Duration duration, LocalDateTime startTime, int epicID) {
+        super(name, description, status, duration, startTime);
+        this.epicID = epicID;
+    }
+
     public Subtask(String name, String description, TaskStatus status, int epicID) {
         super(name, description, status);
+        this.epicID = epicID;
+    }
+
+    public Subtask(String name, String description, TaskStatus status, Duration duration, int epicID) {
+        super(name, description, status, duration);
         this.epicID = epicID;
     }
 
@@ -24,6 +36,11 @@ public class Subtask extends Task {
     @Override
     public TypesTasks getType() {
         return TypesTasks.SUBTASK;
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return super.getEndTime();
     }
 
     @Override

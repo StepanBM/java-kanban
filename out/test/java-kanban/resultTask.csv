@@ -1,4 +1,2 @@
-id,type,name,status,description,epic
-3,EPIC,epic,NEW,desription,
-4,SUBTASK,sub1,NEW,descrr1,3
+id,type,name,status,description,duration,startTime,epic
 historyTask:
