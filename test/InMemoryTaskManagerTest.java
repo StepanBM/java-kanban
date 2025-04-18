@@ -8,6 +8,7 @@ public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager
     @BeforeEach
     public void toBegin() {
         super.taskManager = new InMemoryTaskManager(historyManager);
+        taskManager.clearTasksTest();
         createTaskEpicSubtask();
     }
 

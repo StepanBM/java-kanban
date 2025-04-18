@@ -98,11 +98,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     int epicId = subtask.getepicID();
                     if (manager.epics.containsKey(epicId)) {
                         manager.subtasks.put(subtask.getId(), subtask);
-                        prioritizedTasks.add(subtask);
+                        manager.addTaskPriorityList(subtask);
                     }
                 } else {
                     manager.tasks.put(task.getId(), task);
-                    prioritizedTasks.add(task);
+                    manager.addTaskPriorityList(task);
                 }
             }
         } catch (IOException e) {

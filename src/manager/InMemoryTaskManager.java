@@ -19,8 +19,8 @@ public class InMemoryTaskManager implements TaskManager {
     public Map<Integer, Subtask> subtasks = new HashMap<>();
     public int counter = 1;
 
-    static TaskComparatorTime taskComparatorTime = new TaskComparatorTime();
-    public static TreeSet<Task> prioritizedTasks = new TreeSet<>(taskComparatorTime);
+    private TaskComparatorTime taskComparatorTime = new TaskComparatorTime();
+    public TreeSet<Task> prioritizedTasks = new TreeSet<>(taskComparatorTime);
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
@@ -174,6 +174,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
         task.setId(id);
+        prioritizedTasks.add(task);
         tasks.put(task.getId(), task);
         return task;
     }
@@ -349,6 +350,19 @@ public class InMemoryTaskManager implements TaskManager {
 
     public List<Task> getPrioritizedTasks() {
         return new ArrayList<>(prioritizedTasks);
+    }
+
+    // Для тестов. Сбрасываем состояния чтобы тесты запускаясь независимо друг от друга и не ломались
+    public void clearTasksTest() {
+        tasks.clear();
+        epics.clear();
+        subtasks.clear();
+        prioritizedTasks.clear();
+        counter = 1;
+    }
+
+    public void addTaskPriorityList(Task task) {
+        prioritizedTasks.add(task);
     }
 
 }

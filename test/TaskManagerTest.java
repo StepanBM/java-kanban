@@ -20,20 +20,22 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     Task task4;
     Epic epic1;
     Epic epic2;
-    Subtask subtask;
+    Subtask subtask1;
     Subtask subtask2;
     Subtask subtask3;
+    Subtask subtask4;
 
     public void createTaskEpicSubtask() {
         task1 = new Task("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2222, 1, 1, 0, 9));
         task2 = new Task("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(1999, 1, 1, 0, 12));
         task3 = new Task("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 1, 1, 0, 12));
-        task4 = new Task("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 1, 1, 0, 10));
+        task4 = new Task("Имя подзадачи №4", "Ооооочень длинное описание № 4", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 1, 1, 0, 10));
         epic1 = new Epic("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
         epic2 = new Epic("Имя №2", "Ооооочень длинное описание № 2", TaskStatus.NEW);
-        subtask = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2011, 7, 1, 0, 9), 1);
+        subtask1 = new Subtask("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2011, 7, 1, 0, 9), 1);
         subtask2 = new Subtask("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2012, 7, 1, 0, 20), 1);
         subtask3 = new Subtask("Имя подзадачи №3", "Ооооочень длинное описание № 3", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2033, 7, 1, 0, 35), 1);
+        subtask4 = new Subtask("Имя подзадачи №4", "Ооооочень длинное описание № 4", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2021, 7, 21, 0, 35), 3);
 
     }
 
@@ -72,24 +74,21 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     @Test
     void createSubtask() {
         final int epicId = taskManager.createEpic(epic1);
-        final int subtaskId = taskManager.createSubtask(subtask);
+        final int subtaskId = taskManager.createSubtask(subtask1);
         final int subtaskId2 = taskManager.createSubtask(subtask2);
-      //  final int subtaskId3 = taskManager.createSubtask(subtask3);
-
         final Subtask savedSubtask = taskManager.getByIdSubtask(subtaskId);
 
-        assertEquals(subtask, savedSubtask, "Задачи не совпадают.");
+        assertEquals(subtask1, savedSubtask, "Задачи не совпадают.");
         assertNotNull(savedSubtask, "Задача не найдена.");
 
         final List<Subtask> subtasks = taskManager.outputAllSubtask();
 
         assertNotNull(epic1.getListSubtask(), "Список подзадач не должен быть null.");
         assertEquals(2, epic1.getListSubtask().size(), "Неверное количество подзадач.");
-        assertTrue(epic1.getListSubtask().contains(subtask), "Список подзадач не содержит подзадачу 1.");
+        assertTrue(epic1.getListSubtask().contains(subtask1), "Список подзадач не содержит подзадачу 1.");
         assertTrue(epic1.getListSubtask().contains(subtask2), "Список подзадач не содержит подзадачу 2.");
         assertNotNull(subtasks, "Задачи не возвращаются.");
-        assertEquals(subtask, subtasks.get(0), "Задачи не совпадают.");
-
+        assertEquals(subtask1, subtasks.get(0), "Задачи не совпадают.");
     }
 
     @Test
@@ -116,32 +115,34 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
         assertEquals(0, epics.size(), "Неверное количество задач после удаления.");
 
-        }
+    }
 
-@Test
-void deleteByIdSubtask() {
-    final int epicId = taskManager.createEpic(epic2);
-    final int subtaskId = taskManager.createSubtask(subtask3);
-    taskManager.deleteByIdSubtask(subtaskId);
+    @Test
+    void deleteByIdSubtask() {
+        final int epicId = taskManager.createEpic(epic1);
+        final int subtaskId = taskManager.createSubtask(subtask3);
 
-    assertNull(taskManager.getByIdSubtask(subtaskId), "Задача не была удалена.");
+        taskManager.deleteByIdSubtask(subtaskId);
 
-    List<Subtask> subtasks = taskManager.outputAllSubtask();
+        assertNull(taskManager.getByIdSubtask(subtaskId), "Задача не была удалена.");
 
-    assertEquals(0, subtasks.size(), "Неверное количество задач после удаления.");
+        List<Subtask> subtasks = taskManager.outputAllSubtask();
 
-}
+        assertEquals(0, subtasks.size(), "Неверное количество задач после удаления.");
 
-@Test
-void calculatingTheIntersectionOfTaskTimeIntervals() {
-    ManagerErrorSaveTaskTime exception = assertThrows(ManagerErrorSaveTaskTime.class,
-            () -> {
-                taskManager.createTask(task3);
-                taskManager.createTask(task4);
-            });
-    assertEquals(
-            "Не получилось сохранить задачу, измените время начала",
-            exception.getMessage());
-}
+    }
+
+    @Test
+    void calculatingTheIntersectionOfTaskTimeIntervals() {
+        ManagerErrorSaveTaskTime exception = assertThrows(ManagerErrorSaveTaskTime.class,
+                () -> {
+                    taskManager.createTask(task3);
+                    taskManager.createTask(task4);
+                });
+        assertEquals(
+                "Не получилось сохранить задачу, измените время начала",
+                exception.getMessage());
+
+    }
 
 }
