@@ -38,11 +38,11 @@ public interface TaskManager {
     Subtask getByIdSubtask(int id);
 
     // Обновление задач
-    Task updateTask(int id, Task task);
+    Task updateTask(Task task);
 
-    Epic updateEpic(int id, Epic epic);
+    Epic updateEpic(Epic epic);
 
-    Subtask updateSubtask(int id, Subtask subtask);
+    Subtask updateSubtask(Subtask subtask);
 
     // Удаление по id
     void deleteByIdTask(int id);
@@ -57,5 +57,9 @@ public interface TaskManager {
     void changeStatus(int numberDelete, int id);
 
     List<Task> getHistory();
+
+    List<Task> getPrioritizedTasks();
+
+    boolean theTaskIntersectsInTheList(Task task);
 
 }

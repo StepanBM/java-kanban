@@ -1,7 +1,11 @@
 package tasks;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import data.TaskStatus.TaskStatus;
 import data.TypesTasks.TypesTasks;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,8 +20,16 @@ public class Task {
     private Duration duration;
     private LocalDateTime startTime;
 
-  private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+  // private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+  public Task(int id, String name, String description, TaskStatus status, Duration duration, LocalDateTime startTime) {
+      this.id = id;
+      this.name = name;
+      this.description = description;
+      this.status = status;
+      this.duration = duration;
+      this.startTime = startTime;
 
+  }
 
     public Task(String name, String description, TaskStatus status, Duration duration, LocalDateTime startTime) {
         this.name = name;
@@ -80,6 +92,7 @@ public class Task {
     }
 
     public String getLocalDateTimeString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         String formatDateTime = startTime.format(formatter);
         return formatDateTime;
     }
@@ -103,6 +116,26 @@ public class Task {
     public LocalDateTime getEndTime() {
         return startTime.plus(duration);
     }
+
+
+//    public static class LocalDateAdapter extends TypeAdapter<LocalDateTime> {
+//        private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+//
+//        @Override
+//        public void write(final JsonWriter jsonWriter, final LocalDateTime localDateTime) throws IOException {
+//            if (localDateTime == null) {
+//                jsonWriter.nullValue();
+//            } else {
+//                jsonWriter.value(localDateTime.format(formatter));
+//            }
+//        }
+//
+//        @Override
+//        public LocalDateTime read(final JsonReader jsonReader) throws IOException {
+//           // String nullOrNot = jsonReader.nextString();
+//            return "null".equals(jsonReader.nextString()) ? null : LocalDateTime.parse(jsonReader.nextString(), formatter);
+//        }
+//    }
 
     @Override
     public boolean equals(Object obj) {
