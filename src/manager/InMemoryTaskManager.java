@@ -1,7 +1,7 @@
 package manager;
 
 import data.TaskStatus.TaskStatus;
-import exceptions.ManagerErrorSaveTaskId;
+
 
 import tasks.Epic;
 import tasks.Subtask;
@@ -188,9 +188,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task updateTask(Task task) {
 
-        if (task.getId()<0) {
-            throw new ManagerErrorSaveTaskId("Отрицательное значение id");
-        }
+//        if (task.getId()<0) {
+//            throw new ManagerErrorSaveTaskId("Отрицательное значение id");
+//        }
         if (!(tasks.containsKey(task.getId()))) {
             return task;
         }
@@ -204,9 +204,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic updateEpic(Epic epic) {
-        if (epic.getId()<0) {
-            throw new ManagerErrorSaveTaskId("Отрицательное значение id");
-        }
+//        if (epic.getId()<0) {
+//            throw new ManagerErrorSaveTaskId("Отрицательное значение id");
+//        }
         if (!(epics.containsKey(epic.getId()))) {
             return epic;
         }
@@ -222,9 +222,9 @@ public class InMemoryTaskManager implements TaskManager {
             return subtask;
         }
 
-        if (subtask.getId()<0) {
-            throw new ManagerErrorSaveTaskId("Отрицательное значение id");
-        }
+//        if (subtask.getId()<0) {
+//            throw new ManagerErrorSaveTaskId("Отрицательное значение id");
+//        }
         subtask.setId(subtask.getId());
         subtasks.put(subtask.getId(), subtask);
         for (Integer key : epics.keySet()) {
