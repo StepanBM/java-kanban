@@ -30,8 +30,8 @@ public class HttpTaskServer {
         server.createContext("/subtasks", new TasksHandler());
         server.createContext("/history", new TasksHandler());
         server.createContext("/prioritized", new TasksHandler());
-      //  server.createContext("/epics", new EpicsHandler());
-     //   server.createContext("/subtasks", new SubtasksHandler());
+        //  server.createContext("/epics", new EpicsHandler());
+        //   server.createContext("/subtasks", new SubtasksHandler());
     }
 
     public void start() {
@@ -60,77 +60,74 @@ public class HttpTaskServer {
                         if (pathParts[1].equals("tasks")) {
                             Task task = gson.fromJson(body, Task.class);
                             if (taskManager.theTaskIntersectsInTheList(task)) {
-                                sendNotAcceptable(exchange,"Не получилось сохранить задачу, измените время начала");
+                                sendNotAcceptable(exchange, "Не получилось сохранить задачу, измените время начала");
 
-                            }
-                           else if (!(body.contains("id")) || task.getId()==0) {
+                            } else if (!(body.contains("id")) || task.getId() == 0) {
                                 taskManager.createTask(task);
                                 sendText(exchange, "Задача добавлена", 201);
                                 break;
                             }
-                           // int taskId = task.getId();
+                            // int taskId = task.getId();
                             taskManager.updateTask(task);
                             sendText(exchange, "Задача обновлена", 201);
                         } else if (pathParts[1].equals("epics")) {
                             Epic epic = gson.fromJson(body, Epic.class);
                             if (taskManager.theTaskIntersectsInTheList(epic)) {
-                                sendNotAcceptable(exchange,"Не получилось сохранить задачу, измените время начала");
+                                sendNotAcceptable(exchange, "Не получилось сохранить задачу, измените время начала");
 
-                            }
-                           else if (!(body.contains("id"))) {
+                            } else if (!(body.contains("id"))) {
                                 taskManager.createEpic(epic);
                                 sendText(exchange, "Эпик добавлен", 201);
                                 break;
                             }
-                          //  int epicId = epic.getId();
+                            //  int epicId = epic.getId();
                             taskManager.updateEpic(epic);
                             sendText(exchange, "Эпик обновлен", 201);
                         } else {
                             Subtask subtask = gson.fromJson(body, Subtask.class);
                             if (taskManager.theTaskIntersectsInTheList(subtask)) {
-                                sendNotAcceptable(exchange,"Не получилось сохранить задачу, измените время начала");
-                            }
-                           else if (!(body.contains("id"))) {
+                                sendNotAcceptable(exchange, "Не получилось сохранить задачу, измените время начала");
+                            } else if (!(body.contains("id"))) {
                                 taskManager.createSubtask(subtask);
                                 sendText(exchange, "Подзадача добавлена", 201);
                                 break;
                             }
-                          //  int subtaskId = subtask.getId();
+                            //  int subtaskId = subtask.getId();
                             taskManager.updateSubtask(subtask);
                             sendText(exchange, "Подзадача обновлена", 201);
                         }
                         break;
                     case "DELETE":
-                            IdRequest idRequest = gson.fromJson(body, IdRequest.class);
-                            if (idRequest==null) {
-                                if (pathParts[1].equals("tasks")) {
-                                  taskManager.deleteAllTask();
-                                        sendText(exchange, "Все задачи удалены", 200);
-                                } else if (pathParts[1].equals("epics")) {
-                                        taskManager.deleteAllEpic();
-                                        sendText(exchange, "Все эпики удалены", 200);
-                                } else {
-                                        taskManager.deleteAllSubtask();
-                                        sendText(exchange, "Все подзадачи удалены", 200);
-                                }
-                                break;
+                        IdRequest idRequest = gson.fromJson(body, IdRequest.class);
+                        if (idRequest == null) {
+                            if (pathParts[1].equals("tasks")) {
+                                taskManager.deleteAllTask();
+                                sendText(exchange, "Все задачи удалены", 200);
+                            } else if (pathParts[1].equals("epics")) {
+                                taskManager.deleteAllEpic();
+                                sendText(exchange, "Все эпики удалены", 200);
+                            } else {
+                                taskManager.deleteAllSubtask();
+                                sendText(exchange, "Все подзадачи удалены", 200);
                             }
-                            int idTask = idRequest.getId();
+                            break;
+                        }
+                        int idTask = idRequest.getId();
                         if (pathParts[1].equals("tasks")) {
-                                taskManager.deleteByIdTask(idTask);
-                                sendText(exchange, "Задача удалена", 200);
+                            taskManager.deleteByIdTask(idTask);
+                            sendText(exchange, "Задача удалена", 200);
                         } else if (pathParts[1].equals("epics")) {
-                                taskManager.deleteByIdEpic(idTask);
-                                sendText(exchange, "Эпик удален", 200);
+                            taskManager.deleteByIdEpic(idTask);
+                            sendText(exchange, "Эпик удален", 200);
                         } else {
-                                taskManager.deleteByIdSubtask(idTask);
-                                sendText(exchange, "Подзадача удалена", 200);
+                            taskManager.deleteByIdSubtask(idTask);
+                            sendText(exchange, "Подзадача удалена", 200);
                         }
 
                         break;
                     case "GET":
                         IdRequest idRequestGet = gson.fromJson(body, IdRequest.class);
-                        if (idRequestGet==null) {
+                        if (idRequestGet == null) {
                             if (pathParts[1].equals("tasks")) {
                                 sendText(exchange, gson.toJson(taskManager.outputAllTask()), 200);
                             } else if (pathParts[1].equals("epics")) {
@@ -146,12 +143,12 @@ public class HttpTaskServer {
                         }
                         int idTaskGet = idRequestGet.getId();
                         if (pathParts[1].equals("tasks")) {
-                           Task task = taskManager.getByIdTask(idTaskGet);
-                           if (task != null) {
-                               sendText(exchange, gson.toJson(taskManager.getByIdTask(idTaskGet)), 200);
-                           } else {
-                               sendNotFoundId(exchange, "Данный id: " + idTaskGet + " не найден");
-                           }
+                            Task task = taskManager.getByIdTask(idTaskGet);
+                            if (task != null) {
+                                sendText(exchange, gson.toJson(taskManager.getByIdTask(idTaskGet)), 200);
+                            } else {
+                                sendNotFoundId(exchange, "Данный id: " + idTaskGet + " не найден");
+                            }
                         } else if (pathParts[1].equals("epics")) {
                             Epic epic = taskManager.getByIdEpic(idTaskGet);
                             if (epic != null) {
@@ -161,7 +158,7 @@ public class HttpTaskServer {
                             }
                         } else if (pathParts[1].equals("subtasks")) {
                             Subtask subtask = taskManager.getByIdSubtask(idTaskGet);
-                            if ( subtask != null) {
+                            if (subtask != null) {
                                 sendText(exchange, gson.toJson(taskManager.getByIdSubtask(idTaskGet)), 200);
                             } else {
                                 sendNotFoundId(exchange, "Данный id: " + idTaskGet + " не найден");
