@@ -28,6 +28,14 @@ public class Task {
 
   }
 
+    public Task(int id, String name, String description, TaskStatus status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+
+    }
+
     public Task(String name, String description, TaskStatus status, Duration duration, LocalDateTime startTime) {
         this.name = name;
         this.description = description;

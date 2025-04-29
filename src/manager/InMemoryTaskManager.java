@@ -1,8 +1,7 @@
 package manager;
 
 import data.TaskStatus.TaskStatus;
-
-
+import exceptions.ManagerErrorSaveTaskTime;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
@@ -50,7 +49,9 @@ public class InMemoryTaskManager implements TaskManager {
     // Создание задач
     @Override
     public int createTask(Task task) {
-
+        if (theTaskIntersectsInTheList(task)) {
+            throw new ManagerErrorSaveTaskTime("Не получилось сохранить задачу, измените время начала");
+        }
         createId();
         while (idTasks.contains(counter)) {
             task.setId(counter++);
@@ -77,7 +78,9 @@ public class InMemoryTaskManager implements TaskManager {
         if (!epics.containsKey(subtask.getepicID())) {
             return 0;
         }
-
+        if (theTaskIntersectsInTheList(subtask)) {
+            throw new ManagerErrorSaveTaskTime("Не получилось сохранить задачу, измените время начала");
+        }
         int numberDelete = 0;
         Epic epic = epics.get(subtask.getepicID());
         createId();
@@ -188,9 +191,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task updateTask(Task task) {
 
-//        if (task.getId()<0) {
-//            throw new ManagerErrorSaveTaskId("Отрицательное значение id");
-//        }
+        if (theTaskIntersectsInTheList(task)) {
+            throw new ManagerErrorSaveTaskTime("Не получилось сохранить задачу, измените время начала");
+        }
+
         if (!(tasks.containsKey(task.getId()))) {
             return task;
         }
@@ -204,9 +208,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic updateEpic(Epic epic) {
-//        if (epic.getId()<0) {
-//            throw new ManagerErrorSaveTaskId("Отрицательное значение id");
-//        }
+
         if (!(epics.containsKey(epic.getId()))) {
             return epic;
         }
@@ -217,14 +219,14 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Subtask updateSubtask(Subtask subtask) {
+        if (theTaskIntersectsInTheList(subtask)) {
+            throw new ManagerErrorSaveTaskTime("Не получилось сохранить задачу, измените время начала");
+        }
         int numberDelete = 0;
         if (!(subtasks.containsKey(subtask.getId()))) {
             return subtask;
         }
 
-//        if (subtask.getId()<0) {
-//            throw new ManagerErrorSaveTaskId("Отрицательное значение id");
-//        }
         subtask.setId(subtask.getId());
         subtasks.put(subtask.getId(), subtask);
         for (Integer key : epics.keySet()) {
