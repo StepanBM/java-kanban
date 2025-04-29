@@ -159,7 +159,7 @@ public class HttpTaskServer extends BaseHttpHandler {
                         int idTaskGet = idRequestGet.getId();
                         if (pathParts[1].equals("tasks")) {
                             Task task = taskManager.getByIdTask(idTaskGet);
-                            if (task != null || idTaskGet>0) {
+                            if (task != null || idTaskGet > 0) {
                                 sendText(exchange, gson.toJson(taskManager.getByIdTask(idTaskGet)), 200);
                             } else {
                                 sendNotFoundId(exchange, "Данный id: " + idTaskGet + " не найден");
@@ -167,7 +167,7 @@ public class HttpTaskServer extends BaseHttpHandler {
 
                         } else if (pathParts[1].equals("epics")) {
                             Epic epic = taskManager.getByIdEpic(idTaskGet);
-                            if (epic != null || idTaskGet>0) {
+                            if (epic != null || idTaskGet > 0) {
                                 sendText(exchange, gson.toJson(taskManager.getByIdEpic(idTaskGet)), 200);
                             } else {
                                 sendNotFoundId(exchange, "Данный id: " + idTaskGet + " не найден");
@@ -175,7 +175,7 @@ public class HttpTaskServer extends BaseHttpHandler {
 
                         } else if (pathParts[1].equals("subtasks")) {
                             Subtask subtask = taskManager.getByIdSubtask(idTaskGet);
-                            if (subtask != null || idTaskGet>0) {
+                            if (subtask != null || idTaskGet > 0) {
                                 sendText(exchange, gson.toJson(taskManager.getByIdSubtask(idTaskGet)), 200);
                             } else {
                                 sendNotFoundId(exchange, "Данный id: " + idTaskGet + " не найден");
