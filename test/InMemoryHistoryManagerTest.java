@@ -46,11 +46,11 @@ class InMemoryHistoryManagerTest {
     @Test
     void ThePreviousVersionTasksSavedInTheHistory() {
         Task task = new Task("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 7, 1, 0, 9));
-        Task task2 = new Task("Имя №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 5, 1, 0, 9));
+        Task task2 = new Task(1,"Имя №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(2025, 5, 1, 0, 9));
 
         final int taskId1 = taskManager.createTask(task);
         taskManager.getByIdTask(taskId1);
-        Task savedTask = taskManager.updateTask(taskId1, task2);
+        Task savedTask = taskManager.updateTask(task2);
 
         assertTrue(historyManager.getHistory()!=savedTask);
 

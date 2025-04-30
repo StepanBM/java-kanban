@@ -18,10 +18,10 @@ class EpicTest {
     @Test
     void checkingForEpicConflictWithGivenIdAndGeneratedId() {
         Epic epic1 = new Epic("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
-        Epic epic2 = new Epic("Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
+        Epic epic2 = new Epic(1,"Имя №1", "Ооооочень длинное описание № 1", TaskStatus.NEW);
 
         final int epicId = taskManager.createEpic(epic1);
-        Epic savedEpic = taskManager.updateEpic(epicId, epic2);
+        Epic savedEpic = taskManager.updateEpic(epic2);
 
         assertEquals(epic1, savedEpic, "Задачи не совпадают.");
 

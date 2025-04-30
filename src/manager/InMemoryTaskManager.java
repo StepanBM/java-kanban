@@ -19,6 +19,8 @@ public class InMemoryTaskManager implements TaskManager {
     public Map<Integer, Subtask> subtasks = new HashMap<>();
     public int counter = 1;
 
+    public List<Integer> idTasks = new ArrayList<>();
+
     private TaskComparatorTime taskComparatorTime = new TaskComparatorTime();
     public TreeSet<Task> prioritizedTasks = new TreeSet<>(taskComparatorTime);
 
@@ -32,20 +34,40 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
+    public void createId() {
+        for (Integer key : tasks.keySet()) {
+            idTasks.add(key);
+        }
+        for (Integer key : epics.keySet()) {
+            idTasks.add(key);
+        }
+        for (Integer key : subtasks.keySet()) {
+            idTasks.add(key);
+        }
+    }
+
     // Создание задач
     @Override
     public int createTask(Task task) {
         if (theTaskIntersectsInTheList(task)) {
             throw new ManagerErrorSaveTaskTime("Не получилось сохранить задачу, измените время начала");
         }
-        prioritizedTasks.add(task);
+        createId();
+        while (idTasks.contains(counter)) {
+            task.setId(counter++);
+        }
         task.setId(counter++);
+        prioritizedTasks.add(task);
         tasks.put(task.getId(), task);
         return task.getId();
     }
 
     @Override
     public int createEpic(Epic epic) {
+        createId();
+        while (idTasks.contains(counter)) {
+            epic.setId(counter++);
+        }
         epic.setId(counter++);
         epics.put(epic.getId(), epic);
         return epic.getId();
@@ -61,6 +83,10 @@ public class InMemoryTaskManager implements TaskManager {
         }
         int numberDelete = 0;
         Epic epic = epics.get(subtask.getepicID());
+        createId();
+        while (idTasks.contains(counter)) {
+            subtask.setId(counter++);
+        }
         subtask.setId(counter++);
         subtask.setepicID(subtask.getepicID());
         subtasks.put(subtask.getId(), subtask);
@@ -163,39 +189,45 @@ public class InMemoryTaskManager implements TaskManager {
 
     // Обновление задач
     @Override
-    public Task updateTask(int id, Task task) {
+    public Task updateTask(Task task) {
+
         if (theTaskIntersectsInTheList(task)) {
             throw new ManagerErrorSaveTaskTime("Не получилось сохранить задачу, измените время начала");
         }
-        for (Task oldTask : prioritizedTasks) {
-            if (oldTask.getId() == id) {
-                prioritizedTasks.remove(oldTask);
-                break;
-            }
+
+        if (!(tasks.containsKey(task.getId()))) {
+            return task;
         }
-        task.setId(id);
+        Task oldTask = tasks.get(task.getId());
+        prioritizedTasks.remove(oldTask);
+        task.setId(task.getId());
         prioritizedTasks.add(task);
         tasks.put(task.getId(), task);
         return task;
     }
 
     @Override
-    public Epic updateEpic(int id, Epic epic) {
-        epic.setId(id);
+    public Epic updateEpic(Epic epic) {
+
+        if (!(epics.containsKey(epic.getId()))) {
+            return epic;
+        }
+        epic.setId(epic.getId());
         epics.put(epic.getId(), epic);
         return epic;
     }
 
     @Override
-    public Subtask updateSubtask(int id, Subtask subtask) {
-        int numberDelete = 0;
-        if (!(subtasks.containsKey(id))) {
-            return subtask;
-        }
+    public Subtask updateSubtask(Subtask subtask) {
         if (theTaskIntersectsInTheList(subtask)) {
             throw new ManagerErrorSaveTaskTime("Не получилось сохранить задачу, измените время начала");
         }
-        subtask.setId(id);
+        int numberDelete = 0;
+        if (!(subtasks.containsKey(subtask.getId()))) {
+            return subtask;
+        }
+
+        subtask.setId(subtask.getId());
         subtasks.put(subtask.getId(), subtask);
         for (Integer key : epics.keySet()) {
             Epic epic = epics.get(key);
@@ -215,14 +247,10 @@ public class InMemoryTaskManager implements TaskManager {
     // Удаление по id
     @Override
     public void deleteByIdTask(int id) {
-        tasks.remove(id);
         historyManager.removeTask(id);
-        for (Task task : prioritizedTasks) {
-            if (task.getId() == id) {
-                prioritizedTasks.remove(task);
-                return;
-            }
-        }
+        Task oldTask = tasks.get(id);
+        prioritizedTasks.remove(oldTask);
+        tasks.remove(id);
     }
 
     @Override
@@ -336,6 +364,7 @@ public class InMemoryTaskManager implements TaskManager {
         return task1StartTime.isBefore(task2EndTime) && task2StartTime.isBefore(task1EndTime);
     }
 
+    @Override
     public boolean theTaskIntersectsInTheList(Task task) {
         List<Task> prioritizedTasksList = getPrioritizedTasks();
 
@@ -347,7 +376,7 @@ public class InMemoryTaskManager implements TaskManager {
         return false;
     }
 
-
+    @Override
     public List<Task> getPrioritizedTasks() {
         return new ArrayList<>(prioritizedTasks);
     }
