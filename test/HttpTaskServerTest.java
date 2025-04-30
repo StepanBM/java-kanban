@@ -7,6 +7,8 @@ import manager.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import server.BaseHttpHandler;
+import server.HttpTaskServer;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
@@ -199,7 +201,7 @@ public class HttpTaskServerTest {
         manager.createTask(task1);
 
         int taskId = task.getId();
-        HttpTaskServer.IdRequest idRequest = new HttpTaskServer.IdRequest();
+        BaseHttpHandler.IdRequest idRequest = new BaseHttpHandler.IdRequest();
         idRequest.setId(taskId);
 
         HttpClient client = HttpClient.newHttpClient();
@@ -228,7 +230,7 @@ public class HttpTaskServerTest {
         manager.createEpic(epic1);
 
         int epicId = epic.getId();
-        HttpTaskServer.IdRequest idRequest = new HttpTaskServer.IdRequest();
+        BaseHttpHandler.IdRequest idRequest = new BaseHttpHandler.IdRequest();
         idRequest.setId(epicId);
 
         HttpClient client = HttpClient.newHttpClient();
@@ -259,7 +261,7 @@ public class HttpTaskServerTest {
         manager.createSubtask(subtask1);
 
         int subtaskId = subtask.getId();
-        HttpTaskServer.IdRequest idRequest = new HttpTaskServer.IdRequest();
+        BaseHttpHandler.IdRequest idRequest = new BaseHttpHandler.IdRequest();
         idRequest.setId(subtaskId);
 
         HttpClient client = HttpClient.newHttpClient();
@@ -287,7 +289,7 @@ public class HttpTaskServerTest {
         int taskId = task.getId();
 
         URI url = URI.create("http://localhost:8080/tasks/id");
-        HttpTaskServer.IdRequest idRequest = new HttpTaskServer.IdRequest();
+        BaseHttpHandler.IdRequest idRequest = new BaseHttpHandler.IdRequest();
         idRequest.setId(taskId);
         HttpClient client = HttpClient.newHttpClient();
 
@@ -314,7 +316,7 @@ public class HttpTaskServerTest {
         int epicId = epic.getId();
 
         URI url = URI.create("http://localhost:8080/epics/id");
-        HttpTaskServer.IdRequest idRequest = new HttpTaskServer.IdRequest();
+        BaseHttpHandler.IdRequest idRequest = new BaseHttpHandler.IdRequest();
         idRequest.setId(epicId);
         HttpClient client = HttpClient.newHttpClient();
 
@@ -345,7 +347,7 @@ public class HttpTaskServerTest {
         int subtaskId = subtask.getId();
 
         URI url = URI.create("http://localhost:8080/subtasks/id");
-        HttpTaskServer.IdRequest idRequest = new HttpTaskServer.IdRequest();
+        BaseHttpHandler.IdRequest idRequest = new BaseHttpHandler.IdRequest();
         idRequest.setId(subtaskId);
         HttpClient client = HttpClient.newHttpClient();
 
@@ -424,7 +426,7 @@ public class HttpTaskServerTest {
         int taskId = -1;
 
         URI url = URI.create("http://localhost:8080/tasks/id");
-        HttpTaskServer.IdRequest idRequest = new HttpTaskServer.IdRequest();
+        BaseHttpHandler.IdRequest idRequest = new BaseHttpHandler.IdRequest();
         idRequest.setId(taskId);
         HttpClient client = HttpClient.newHttpClient();
 

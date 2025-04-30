@@ -1,5 +1,6 @@
 //import data.TaskStatus.TaskStatus;
 import manager.*;
+//import server.HttpTaskServer;
 //import tasks.Epic;
 //import tasks.Subtask;
 
@@ -7,7 +8,7 @@ import java.io.IOException;
 //import java.time.Duration;
 //import java.time.LocalDateTime;
 
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -15,7 +16,7 @@ import java.nio.file.Path;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
+ //       Scanner scanner = new Scanner(System.in);
 //        HistoryManager historyManager = Managers.getDefaultHistory();
 //        TaskManager manager = Managers.getDefault(historyManager);
 
@@ -28,9 +29,9 @@ public class Main {
 
         // HttpTaskManager taskManager = new HttpTaskManager();
       //  FileBackedTaskManager taskManager = new FileBackedTaskManager(new InMemoryHistoryManager(), file);
-
-        HttpTaskServer server = new HttpTaskServer(manager);
-        server.start();
+//
+//        HttpTaskServer server = new HttpTaskServer(manager);
+//        server.start();
 
 //        Task task1 = new Task("Имя подзадачи №1", "Ооооочень длинное описание № 1", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(3333, 7, 1, 0, 33));
 //        Task task2 = new Task("Имя подзадачи №2", "Ооооочень длинное описание № 2", TaskStatus.NEW, Duration.ofMinutes(10), LocalDateTime.of(5555, 7, 1, 0, 33));
